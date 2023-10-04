@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,14 +7,15 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Security;
 
 namespace InstrumentCalibrationTracker
 {
     class Program
     {
         // Move email credentials to configuration files or environment variables.
-        private static readonly string EmailUsername = "your_email@gmail.com";
-        private static readonly string EmailPassword = "your_email_password";
+        private static readonly string EmailUsername = "tristan.girard16@gmail.com";
+        private static readonly string EmailPassword = "Atn82d$r2025";
 
         static async Task Main(string[] args)
         {

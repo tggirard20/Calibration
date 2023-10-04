@@ -19,7 +19,7 @@ namespace InstrumentCalibrationTracker
 
         static async Task Main(string[] args)
         {
-            string connectionString = @"Data Source=YourServer;Initial Catalog=CalibrationDatabase;" +
+            string connectionString = @"Server=desktop-e3ljnia;Database=CalibrationData;" +
                 "Integrated Security=True;MultipleActiveResultSets=True";
 
             try
@@ -42,7 +42,7 @@ namespace InstrumentCalibrationTracker
             try
             {
                 // Query the database to retrieve instruments that need calibration.
-                string query = "SELECT * FROM Instruments WHERE NextCalibrationDate <= GETDATE()";
+                string query = "SELECT * FROM Instruments2 WHERE CalibrationDate <= GETDATE()";
                 using (var command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = await command.ExecuteReaderAsync())
@@ -50,7 +50,7 @@ namespace InstrumentCalibrationTracker
                         while (await reader.ReadAsync())
                         {
                             string instrumentName = reader["InstrumentName"].ToString();
-                            DateTime nextCalibrationDate = Convert.ToDateTime(reader["NextCalibrationDate"]);
+                            DateTime nextCalibrationDate = Convert.ToDateTime(reader["CalibrationDate"]);
 
                             // Calculate days until calibration is due.
                             int daysUntilDue = (int)(nextCalibrationDate - DateTime.Now).TotalDays;
@@ -117,7 +117,7 @@ namespace InstrumentCalibrationTracker
         {
             try
             {
-                string query = "UPDATE Instruments SET LastReminderSentDate = GETDATE() WHERE InstrumentName = @InstrumentName";
+                string query = "UPDATE Instruments2 SET LastReminderSentDate = GETDATE() WHERE InstrumentName = @InstrumentName";
                 using (var command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@InstrumentName", instrumentName);
